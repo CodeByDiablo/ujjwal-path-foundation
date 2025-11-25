@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Ujjwal Path Foundation – empowering underprivileged children through education and community support</title>
+    <!-- Make it responsive on all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Internal CSS so it's easy to copy-paste -->
+    <style>
+        :root {
+            /* Color palette – change as you like */
+            --bg-color: #f9fafb;
+            --card-color: #ffffff;
+            --primary-color: #2563eb;
+            --primary-color-soft: rgba(37, 99, 235, 0.08);
+            --accent-color: #f97316;
+            --text-color: #111827;
+            --muted-text-color: #6b7280;
+            --border-color: #e5e7eb;
+            --danger-color: #ef4444;
+            --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.08);
+            --shadow-strong: 0 18px 40px rgba(15, 23, 42, 0.14);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling for nav links */
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Layout helpers */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        section:nth-of-type(even) {
+            /* Very subtle alternating background */
+            background-color: #f3f4f6;
+        }
+
+        h1, h2, h3, h4 {
+            color: #111827;
+        }
+
+        h2.section-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--muted-text-color);
+            font-size: 0.98rem;
+        }
+
+        /* ===================== SMALL ANIMATIONS / KEYFRAMES ===================== */
+        @keyframes float-soft {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow-soft {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.14);
+            }
+            100% {
+                box-shadow: 0 0 0 12px rgba(37, 99, 235, 0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition:
+                opacity 0.55s ease-out,
+                transform 0.55s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===================== NAVBAR ===================== */
+        header {
+            position: fixed;
+            top: 0;
+            inset-inline: 0;
+            z-index: 1000;
+            background-color: rgba(249, 250, 251, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+            transition: box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(249, 250, 251, 0.98);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+            border-color: rgba(229, 231, 235, 0.9);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.85rem 0;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.03em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .nav-logo span {
+            color: var(--primary-color);
+        }
+
+        .nav-logo::before {
+            content: "☀️";
+            font-size: 1.1rem;
+            transform-origin: center;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-logo:hover::before {
+            transform: rotate(-8deg) scale(1.08);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            color: var(--muted-text-color);
+            position: relative;
+            padding-bottom: 0.15rem;
+            transition: color 0.18s ease, transform 0.18s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -0.1rem;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.2s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a:focus-visible::after {
+            width: 100%;
+        }
+
+        /* Mobile nav toggle (hamburger) */
+        .nav-toggle {
+            display: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background-color: #111827;
+            border-radius: 999px;
+            transition: 0.25s ease;
+        }
+
+        .nav-toggle span + span {
+            margin-top: 5px;
+        }
+
+        /* ===================== HERO ===================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 4.5rem; /* Offset for fixed header */
+        }
+
+        .hero-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-heading {
+            font-size: clamp(2.3rem, 5vw, 3.2rem);
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-tagline {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-description {
+            color: var(--muted-text-color);
+            max-width: 36rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            padding: 0.65rem 1.35rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition:
+                transform 0.12s ease,
+                box-shadow 0.12s ease,
+                background-color 0.12s ease,
+                border-color 0.12s ease,
+                opacity 0.12s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 30px rgba(37, 99, 235, 0.45);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+            opacity: 0.95;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color-soft);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline:active {
+            transform: translateY(0);
+            opacity: 0.96;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            background-color: #e5f2ff;
+            color: #1d4ed8;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            animation: float-soft 5s ease-in-out infinite;
+        }
+
+        .hero-card {
+            background-color: var(--card-color);
+            border-radius: 1.5rem;
+            padding: 1.8rem 1.6rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .hero-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-card p {
+            font-size: 0.9rem;
+            color: var(--muted-text-color);
+            margin-bottom: 0.9rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .hero-stat {
+            padding: 0.7rem 0.6rem;
+            border-radius: 1rem;
+            background-color: #f9fafb;
+            border: 1px dashed #e5e7eb;
+            text-align: center;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        }
+
+        .hero-stat:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+            border-color: rgba(37, 99, 235, 0.35);
+        }
+
+        .hero-stat-number {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .hero-stat-label {
+            font-size: 0.78rem;
+            color: var(--muted-text-color);
+        }
+
+        /* ===================== ABOUT ===================== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.7fr);
+            gap: 2.5rem;
+            align-items: flex-start;
+        }
+
+        .about-text p + p {
+            margin-top: 0.8rem;
+        }
+
+        .highlight-box {
+            padding: 1.25rem 1.3rem;
+            border-radius: 1rem;
+            background-color: var(--primary-color-soft);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            font-size: 0.95rem;
+            color: #1f2933;
+            position: relative;
+            animation: glow-soft 2.4s ease-out infinite;
+        }
+
+        .highlight-box::before {
+            content: "“";
+            position: absolute;
+            font-size: 2.6rem;
+            opacity: 0.15;
+            top: -0.6rem;
+            left: 0.5rem;
+        }
+
+        .highlight-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #1d4ed8;
+            margin-bottom: 0.35rem;
+            display: block;
+        }
+
+        /* ===================== OUR WORK ===================== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.6rem;
+        }
+
+        /* Cards default: hidden for stagger-on-enter */
+        .card {
+            background-color: var(--card-color);
+            border-radius: 1.2rem;
+            padding: 1.4rem 1.5rem;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.03);
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(16px);
+            transition:
+                opacity 0.45s ease-out,
+                transform 0.45s ease-out,
+                box-shadow 0.18s ease,
+                border-color 0.18s ease;
+        }
+
+        /* When JS adds .visible to the cards (with staggered timeouts) */
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-strong);
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+
+        .card-emoji {
+            width: 2.4rem;
+            height: 2.4rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.9rem;
+            background-color: var(--primary-color-soft);
+            font-size: 1.2rem;
+            margin-bottom: 0.9rem;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover .card-emoji {
+            transform: translateY(-3px) rotate(-5deg);
+        }
+
+        .card h3 {
+            font-size: 1.02rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--muted-text-color);
+        }
+
+        /* ===================== IMPACT ===================== */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1.4rem;
+        }
+
+        .impact-card {
+            background-color: var(--card-color);
+            border-radius: 1.1rem;
+            padding: 1.2rem 1.1rem;
+            text-align: center;
+            border: 1px dashed var(--border-color);
+            opacity: 0;
+            transform: translateY(16px);
+            transition:
+                opacity 0.45s ease-out,
+                transform 0.45s ease-out,
+                box-shadow 0.18s ease,
+                border-color 0.18s ease;
+        }
+
+        .impact-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .impact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+            border-color: rgba(37, 99, 235, 0.5);
+        }
+
+        .impact-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.35rem;
+        }
+
+        .impact-label {
+            font-size: 0.85rem;
+            color: var(--muted-text-color);
+        }
+
+        /* ===================== GET INVOLVED ===================== */
+        .get-involved-container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .get-involved-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .get-involved-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+
+        .pill-card {
+            background-color: var(--card-color);
+            border-radius: 1.5rem;
+            padding: 1.4rem 1.5rem;
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(16px);
+            transition:
+                opacity 0.45s ease-out,
+                transform 0.45s ease-out,
+                box-shadow 0.18s ease,
+                border-color 0.18s ease;
+        }
+
+        .pill-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+            border-color: rgba(37, 99, 235, 0.5);
+        }
+
+        .pill-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .pill-card p {
+            font-size: 0.88rem;
+            color: var(--muted-text-color);
+        }
+
+        /* ===================== DONATE ===================== */
+        .donate-section {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .donate-section p {
+            margin-bottom: 1.1rem;
+            color: var(--muted-text-color);
+        }
+
+        .upi-box {
+            border-radius: 1.2rem;
+            border: 1px dashed var(--border-color);
+            padding: 1rem 1.1rem;
+            background-color: #f9fafb;
+            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+        }
+
+        .upi-label {
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .upi-id {
+            font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+            background-color: #eef2ff;
+            padding: 0.25rem 0.45rem;
+            border-radius: 0.5rem;
+            font-size: 0.86rem;
+            color: #1d4ed8;
+            word-break: break-all;
+        }
+
+        .donate-form {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+            gap: 0.9rem;
+            align-items: center;
+            margin-top: 0.3rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.22rem;
+        }
+
+        label {
+            font-size: 0.86rem;
+            color: var(--muted-text-color);
+        }
+
+        input,
+        textarea {
+            border-radius: 0.8rem;
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 0.75rem;
+            font-size: 0.92rem;
+            font-family: inherit;
+            outline: none;
+            background-color: #ffffff;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2);
+            background-color: #f9fafb;
+            transform: translateY(-1px);
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .btn-gpay {
+            background-color: #000000;
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 0.65rem 1.4rem;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.94rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 12px 25px rgba(15, 23, 42, 0.3);
+            transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+        }
+
+        .btn-gpay:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.35);
+        }
+
+        .btn-gpay:active {
+            transform: translateY(0);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.3);
+            opacity: 0.97;
+        }
+
+        .btn-gpay span.logo-dot {
+            width: 0.65rem;
+            height: 0.65rem;
+            border-radius: 50%;
+            background: conic-gradient(from 90deg, #34a853, #4285f4, #fbbc05, #ea4335, #34a853);
+        }
+
+        .note-text {
+            font-size: 0.8rem;
+            color: var(--muted-text-color);
+            margin-top: 0.4rem;
+        }
+
+        .error-text {
+            font-size: 0.8rem;
+            color: var(--danger-color);
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        /* ===================== CONTACT ===================== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.8fr);
+            gap: 2rem;
+        }
+
+        .contact-details {
+            font-size: 0.95rem;
+            color: var(--muted-text-color);
+        }
+
+        .contact-details strong {
+            color: var(--text-color);
+        }
+
+        .contact-list {
+            margin: 0.9rem 0 0;
+            list-style: none;
+        }
+
+        .contact-list li + li {
+            margin-top: 0.5rem;
+        }
+
+        .contact-form .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.9rem;
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            margin-top: 1rem;
+        }
+
+        /* ===================== FOOTER ===================== */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1.4rem 0;
+            background-color: #f9fafb;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--muted-text-color);
+        }
+
+        .footer-social {
+            display: inline-flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.7rem;
+            height: 1.7rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+        }
+
+        .footer-social a:hover {
+            border-color: var(--primary-color);
+            background-color: #e5f0ff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+        }
+
+        /* ===================== RESPONSIVE ===================== */
+        @media (max-width: 900px) {
+            .hero-inner {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .hero {
+                padding-top: 4.3rem;
+            }
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .cards-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .impact-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .get-involved-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .donate-form {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 720px) {
+            .nav-links {
+                position: fixed;
+                inset-inline: 0;
+                top: 3.1rem;
+                background-color: rgba(249, 250, 251, 0.97);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.75rem 1.25rem 1rem;
+                border-bottom: 1px solid var(--border-color);
+                transform: translateY(-120%);
+                opacity: 0;
+                pointer-events: none;
+                transition: transform 0.2s ease, opacity 0.2s ease;
+            }
+
+            .nav-links a {
+                padding: 0.25rem 0;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+                flex-direction: column;
+            }
+
+            header.nav-open .nav-links {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            header.nav-open .nav-toggle span:nth-child(1) {
+                transform: translateY(7px) rotate(45deg);
+            }
+
+            header.nav-open .nav-toggle span:nth-child(2) {
+                opacity: 0;
+            }
+
+            header.nav-open .nav-toggle span:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg);
+            }
+
+            section {
+                padding: 3.8rem 0;
+            }
+
+            .cards-grid,
+            .impact-grid,
+            .get-involved-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .hero-card {
+                margin-top: 1rem;
+            }
+
+            .contact-form .form-row {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .card,
+            .impact-card,
+            .pill-card {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===================== NAVBAR ===================== -->
+    <header id="topHeader">
+        <div class="container nav">
+            <div class="nav-logo">
+                <span>Ujjwal Path Foundation</span>
+            </div>
+            <nav class="nav-links" aria-label="Main navigation">
+                <!-- Navigation links scroll to sections -->
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#work">Our Work</a>
+                <a href="#impact">Impact</a>
+                <a href="#get-involved">Get Involved</a>
+                <a href="#donate">Donate</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="nav-toggle" aria-label="Toggle navigation menu">
+                <!-- Simple hamburger icon using spans -->
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===================== HERO / HOME ===================== -->
+    <section id="home" class="hero reveal">
+        <div class="container hero-inner">
+            <div>
+                <div class="hero-badge">
+                    <span>NGO / Social Community</span>
+                    <span>•</span>
+                    <span>empowering underprivileged children through education and community support</span>
+                </div>
+                <h1 class="hero-heading">Ujjwal Path Foundation</h1>
+                <p class="hero-tagline">Lighting the path of every child’s future.</p>
+                <p class="hero-description">
+                    We are a community-driven non-profit working tirelessly towards empowering
+                    underprivileged children through education and community support.
+                    By uniting volunteers, partners, and supporters, we strive to create sustainable
+                    opportunities and safe spaces for every child to learn, grow, and dream.
+                </p>
+                <div class="hero-buttons">
+                    <!-- Primary Donate CTA scrolls to Donate section -->
+                    <a href="#donate" class="btn btn-primary">Donate Now</a>
+                    <!-- Secondary CTA scrolls to About section -->
+                    <a href="#about" class="btn btn-outline">Learn More</a>
+                </div>
+                <p class="note-text">
+                    Every contribution, big or small, helps us move one step closer to our vision.
+                </p>
+            </div>
+
+            <!-- Right-side hero info card -->
+            <aside class="hero-card" aria-label="Quick overview">
+                <h3>Why Ujjwal Path Foundation exists</h3>
+                <p>
+                    Ujjwal Path Foundation was formed to bring together compassionate individuals who believe that 
+                    lasting change begins at the community level. We focus on transparent, measurable impact.
+                </p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-number">1500+</div>
+                        <div class="hero-stat-label">Lives touched</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number">50+</div>
+                        <div class="hero-stat-label">Active volunteers</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number">20+</div>
+                        <div class="hero-stat-label">Ongoing projects</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="reveal">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <p class="section-subtitle">Learn more about our mission, vision, and story.</p>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        Ujjwal Path Foundation is a non-profit organisation dedicated to empowering underprivileged
+                        children through education and community support. We believe that meaningful change begins
+                        when communities come together with empathy, knowledge, and the courage to act.
+                    </p>
+                    <p>
+                        Our mission is to create safe, inclusive spaces where children and their families can access
+                        the support, resources, and opportunities they deserve. Through after-school programmes,
+                        mentorship, and awareness campaigns, we work to bridge gaps in learning and well-being.
+                    </p>
+                    <p>
+                        From small neighbourhood learning circles to city-wide initiatives, our story is shaped by
+                        volunteers, partners, and supporters who share one simple belief: every child deserves a fair
+                        chance to build a brighter future.
+                    </p>
+                </div>
+
+                <!-- Highlight / quote box summarizing the mission -->
+                <aside class="highlight-box" aria-label="Mission highlight">
+                    <span class="highlight-label">Our mission in one line</span>
+                    <p>
+                        To empower underprivileged children and their communities through holistic education,
+                        mentorship, and compassionate support.
+                    </p>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== OUR WORK ===================== -->
+    <section id="work" class="reveal">
+        <div class="container">
+            <h2 class="section-title">Our Work</h2>
+            <p class="section-subtitle">A glimpse into the initiatives we run on the ground.</p>
+
+            <div class="cards-grid">
+                <!-- Card 1 -->
+                <article class="card">
+                    <div class="card-emoji">📘</div>
+                    <h3>Learning Circles</h3>
+                    <p>
+                        Community-based learning spaces where children receive academic support, life skills,
+                        and confidence-building activities after school hours.
+                    </p>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="card">
+                    <div class="card-emoji">🩺</div>
+                    <h3>Health & Hygiene Camps</h3>
+                    <p>
+                        Regular camps and awareness sessions on nutrition, hygiene, and mental well-being
+                        to ensure children grow up healthy and informed.
+                    </p>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="card">
+                    <div class="card-emoji">🤝</div>
+                    <h3>Community Outreach</h3>
+                    <p>
+                        Working closely with parents, schools, and local leaders to build a support ecosystem
+                        that nurtures every child’s potential.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== IMPACT ===================== -->
+    <section id="impact" class="reveal">
+        <div class="container">
+            <h2 class="section-title">Our Impact</h2>
+            <p class="section-subtitle">Numbers that reflect the trust and support we’ve received.</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-number">1500+</div>
+                    <div class="impact-label">Children Reached</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">50+</div>
+                    <div class="impact-label">Active Volunteers</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">20+</div>
+                    <div class="impact-label">Projects Completed</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">10+</div>
+                    <div class="impact-label">Partner Communities</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== GET INVOLVED ===================== -->
+    <section id="get-involved" class="reveal">
+        <div class="container get-involved-container">
+            <h2 class="section-title">Get Involved</h2>
+            <p class="section-subtitle">There are many ways you can stand with us.</p>
+
+            <div class="get-involved-intro">
+                <p>
+                    Whether you have time, resources, or simply your voice to offer, your involvement
+                    makes a real difference. Here’s how you can join our journey at Ujjwal Path Foundation:
+                </p>
+            </div>
+
+            <div class="get-involved-grid">
+                <!-- Volunteer -->
+                <article class="pill-card">
+                    <h3>Volunteer</h3>
+                    <p>
+                        Mentor children, support events, or contribute your skills to our programmes.
+                        A few hours a week can change a child’s life.
+                    </p>
+                </article>
+
+                <!-- Partner -->
+                <article class="pill-card">
+                    <h3>Partner with us</h3>
+                    <p>
+                        Collaborate as an organisation, institution, or corporate partner to co-create
+                        sustainable initiatives and long-term projects.
+                    </p>
+                </article>
+
+                <!-- Share -->
+                <article class="pill-card">
+                    <h3>Share our story</h3>
+                    <p>
+                        Help us reach more people by sharing our work with your friends, family, and
+                        networks on social media.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== DONATE ===================== -->
+    <section id="donate" class="reveal">
+        <div class="container donate-section">
+            <h2 class="section-title">Support Our Work</h2>
+            <p class="section-subtitle">Your contribution enables us to plan better, reach further, and do more.</p>
+
+            <!-- Brief explanation -->
+            <p>
+                Every rupee you contribute helps us expand our programmes, support more children,
+                and respond quickly to urgent needs on the ground. Thank you for choosing to support
+                Ujjwal Path Foundation.
+            </p>
+
+            <!-- UPI ID display -->
+            <div class="upi-box">
+                <span class="upi-label">Donate via UPI:</span>
+                <span class="upi-id">9958639005@ptsbi</span>
+            </div>
+
+            <!-- Donation input + Google Pay button -->
+            <div class="donate-form">
+                <!-- Donation amount input -->
+                <div class="form-group">
+                    <label for="donationAmount">
+                        Donation amount (INR)
+                    </label>
+                    <input
+                        type="number"
+                        id="donationAmount"
+                        min="1"
+                        placeholder="Enter amount e.g. 500"
+                        inputmode="decimal"
+                    />
+                    <p class="error-text" id="donationError">Please enter a valid donation amount (INR).</p>
+                    <p class="note-text">
+                        Note: You will be redirected to your UPI / Google Pay app to complete the payment.
+                    </p>
+                </div>
+
+                <!-- Google Pay button -->
+                <div class="form-group">
+                    <button type="button" class="btn-gpay" id="gpayButton">
+                        <span class="logo-dot" aria-hidden="true"></span>
+                        <span>Donate with Google Pay / UPI</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="reveal">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-subtitle">We’d love to hear from you.</p>
+
+            <div class="contact-grid">
+                <!-- Contact details -->
+                <div class="contact-details">
+                    <p>
+                        Have questions, ideas, or want to collaborate? Reach out to us using the details
+                        below or send us a message via the form.
+                    </p>
+
+                    <ul class="contact-list">
+                        <li>
+                            <strong>Email:</strong>
+                            <!-- Replace with your real email -->
+                            <a href="mailto:youremail@example.com">youremail@example.com</a>
+                        </li>
+                        <li>
+                            <strong>Phone:</strong>
+                            <!-- Replace with your real phone -->
+                            <a href="tel:9999999999">9999999999</a>
+                        </li>
+                        <li>
+                            <strong>Location:</strong>
+                            Your City, Your State, India
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Simple contact form (front-end only) -->
+                <form class="contact-form" id="contactForm" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactName">Name</label>
+                            <input type="text" id="contactName" name="name" placeholder="Your full name" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 0.75rem;">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" name="message" placeholder="How can we help?" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Send Message
+                    </button>
+
+                    <p class="note-text">
+                        This is a demo form – you can connect it to your backend or form service later.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer>
+        <div class="container footer-inner">
+            <p>
+                © 2025 Ujjwal Path Foundation. All rights reserved.
+            </p>
+            <div class="footer-social">
+                <!-- Simple social icons using emoji or text (replace with your links) -->
+                <a href="#" aria-label="Visit our Facebook page">📘</a>
+                <a href="#" aria-label="Visit our Instagram profile">📸</a>
+                <a href="#" aria-label="Visit our Twitter/X profile">🐦</a>
+                <a href="#topHeader" aria-label="Back to top">⬆️</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+        // ===================== MOBILE NAV TOGGLE + SCROLLED NAV =====================
+        (function () {
+            const header = document.getElementById("topHeader");
+            const navToggle = document.querySelector(".nav-toggle");
+            const navLinks = document.querySelectorAll(".nav-links a");
+
+            if (!header) return;
+
+            if (navToggle) {
+                navToggle.addEventListener("click", function () {
+                    // Toggle a class on the header to open/close the mobile nav
+                    header.classList.toggle("nav-open");
+                });
+            }
+
+            // Close mobile nav when a link is clicked
+            navLinks.forEach(function (link) {
+                link.addEventListener("click", function () {
+                    header.classList.remove("nav-open");
+                });
+            });
+
+            // Add "scrolled" class when page is not at the top
+            function handleScroll() {
+                if (window.scrollY > 10) {
+                    header.classList.add("scrolled");
+                } else {
+                    header.classList.remove("scrolled");
+                }
+            }
+
+            handleScroll();
+            window.addEventListener("scroll", handleScroll);
+        })();
+
+
+        // ===================== DONATE WITH GOOGLE PAY / UPI =====================
+        (function () {
+            // HTML elements
+            const donationInput = document.getElementById("donationAmount");
+            const donationError = document.getElementById("donationError");
+            const gpayButton = document.getElementById("gpayButton");
+
+            // === CONFIGURABLE VALUES (EASY TO EDIT) ===
+            // NOTE:
+            // - Replace the values below if you change NGO name or UPI ID.
+            // - Do NOT URL-encode here; we will encode using encodeURIComponent().
+
+            const NGO_NAME = "Ujjwal Path Foundation";       // Your NGO name
+            const UPI_ID = "9958639005@ptsbi";               // Your UPI ID
+            const PAYMENT_NOTE = "Thank you for supporting our work"; // UPI transaction note
+
+            // This function builds and opens the UPI payment URL.
+            function handleGPayClick() {
+                if (!donationInput || !gpayButton) return;
+
+                let amountValue = donationInput.value.trim();
+
+                // Basic validation: check if amount is a positive number
+                const amountNumber = parseFloat(amountValue);
+
+                if (!amountValue || isNaN(amountNumber) || amountNumber <= 0) {
+                    // Show error text and alert
+                    if (donationError) {
+                        donationError.style.display = "block";
+                    }
+                    alert("Please enter a valid donation amount in INR.");
+                    donationInput.focus();
+                    return;
+                }
+
+                // Hide error if previously shown
+                if (donationError) {
+                    donationError.style.display = "none";
+                }
+
+                // OPTIONAL: You can limit to two decimal places
+                const normalizedAmount = amountNumber.toFixed(2);
+
+                // URL-encode the NGO name and payment note for safe use in the URL
+                const encodedNGoName = encodeURIComponent(NGO_NAME);
+                const encodedNote = encodeURIComponent(PAYMENT_NOTE);
+
+                // Build the UPI URL.
+                // Format:
+                // upi://pay?pa={{UPI_ID}}&pn={{NGO_NAME_URL_ENCODED}}&am=ENTERED_AMOUNT&cu=INR&tn={{PAYMENT_NOTE_URL_ENCODED}}
+                const upiUrl =
+                    "upi://pay" +
+                    "?pa=" + encodeURIComponent(UPI_ID) +
+                    "&pn=" + encodedNGoName +
+                    "&am=" + encodeURIComponent(normalizedAmount) +
+                    "&cu=INR" +
+                    "&tn=" + encodedNote;
+
+                // Redirect the browser to the UPI URL.
+                // On Android devices (with Google Pay / UPI apps), this should open the payment app.
+                window.location.href = upiUrl;
+            }
+
+            if (gpayButton) {
+                gpayButton.addEventListener("click", handleGPayClick);
+            }
+        })();
+
+
+        // ===================== SIMPLE CONTACT FORM VALIDATION =====================
+        (function () {
+            const contactForm = document.getElementById("contactForm");
+
+            if (!contactForm) return;
+
+            contactForm.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent actual form submission (front-end only demo)
+
+                const name = document.getElementById("contactName");
+                const email = document.getElementById("contactEmail");
+                const message = document.getElementById("contactMessage");
+
+                // Basic validation: all fields required
+                if (!name.value.trim() || !email.value.trim() || !message.value.trim()) {
+                    alert("Please fill in all the fields before submitting.");
+                    return;
+                }
+
+                // Optional: very simple email pattern check
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email.value.trim())) {
+                    alert("Please enter a valid email address.");
+                    email.focus();
+                    return;
+                }
+
+                // For now, simply show a thank-you message
+                alert("Thank you for reaching out! We will get back to you soon.");
+
+                // Optionally, reset the form fields
+                contactForm.reset();
+            });
+        })();
+
+
+        // ===================== SCROLL REVEAL + STAGGERED CARDS =====================
+        (function () {
+            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+            const revealSections = document.querySelectorAll(".reveal");
+            const allCards = document.querySelectorAll(".card, .impact-card, .pill-card");
+
+            // Helper: instantly show everything (no animation)
+            function showAllInstant() {
+                revealSections.forEach(el => el.classList.add("visible"));
+                allCards.forEach(card => card.classList.add("visible"));
+            }
+
+            if (prefersReducedMotion.matches) {
+                // If user prefers reduced motion, just show all
+                showAllInstant();
+                return;
+            }
+
+            if (!("IntersectionObserver" in window) || revealSections.length === 0) {
+                // Fallback: show everything if IntersectionObserver not supported
+                showAllInstant();
+                return;
+            }
+
+            const observer = new IntersectionObserver(
+                entries => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+
+                        const section = entry.target;
+                        section.classList.add("visible");
+
+                        // Find cards within this section
+                        const cardsInSection = section.querySelectorAll(".card, .impact-card, .pill-card");
+
+                        // Stagger each card with a small delay (120ms apart)
+                        cardsInSection.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.classList.add("visible");
+                            }, index * 120);
+                        });
+
+                        observer.unobserve(section);
+                    });
+                },
+                {
+                    threshold: 0.18
+                }
+            );
+
+            revealSections.forEach(el => observer.observe(el));
+        })();
+    </script>
+</body>
+</html>
